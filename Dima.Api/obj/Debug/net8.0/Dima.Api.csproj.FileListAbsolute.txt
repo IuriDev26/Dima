@@ -168,3 +168,4 @@
 /home/iuridev26/Development/Learning/.NET/Dima/Dima.Api/obj/Debug/net8.0/Dima.Api.pdb
 /home/iuridev26/Development/Learning/.NET/Dima/Dima.Api/obj/Debug/net8.0/Dima.Api.genruntimeconfig.cache
 /home/iuridev26/Development/Learning/.NET/Dima/Dima.Api/obj/Debug/net8.0/ref/Dima.Api.dll
+/home/iuridev26/Development/Learning/.NET/Dima/Dima.Api/obj/Debug/net8.0/Dima.Api.sourcelink.json
