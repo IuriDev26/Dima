@@ -8,7 +8,7 @@ public class TransactionMapping : IEntityTypeConfiguration<Transaction>
 {
     public void Configure(EntityTypeBuilder<Transaction> builder)
     {
-        builder.ToTable("Transaction");
+        builder.ToTable("Transactions");
 
         builder.HasKey(x => x.Id);
 
@@ -35,5 +35,11 @@ public class TransactionMapping : IEntityTypeConfiguration<Transaction>
             .IsRequired(true)
             .HasColumnType("VARCHAR")
             .HasMaxLength(160);
+        
+        builder.HasOne(x => x.Category)
+            .WithMany(x => x.Transactions)
+            .HasForeignKey(x=>x.CategoryId)
+            .HasConstraintName("FK_Transactions_Categories")
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

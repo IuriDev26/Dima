@@ -7,8 +7,8 @@ public class CreateTransactionRequest : Request
 {
     [Required(ErrorMessage = "Título é obrigatório")]
     public string Title { get; set; } = string.Empty;
-    
-    public DateTime? PaidOrReceivedAt { get; set; }
+
+    public DateTime? PaidOrReceivedAt { get; set; } = null;
 
     [Required(ErrorMessage = "Tipo da transação é obrigatório")]
     public ETransactionType Type { get; set; }

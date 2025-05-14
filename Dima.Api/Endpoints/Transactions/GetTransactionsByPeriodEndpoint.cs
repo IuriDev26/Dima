@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Dima.Api.Common.Api;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
@@ -20,20 +21,21 @@ public class GetTransactionsByPeriodEndpoint : IEndpoint
         [FromQuery] int pageNumber, 
         [FromQuery] int pageSize,
         [FromQuery] DateTime? startDate,
-        [FromQuery] DateTime? endDate)
+        [FromQuery] DateTime? endDate,
+        ClaimsPrincipal user) 
     {
         var request = new GetByPeriodRequest()
         {
             PageNumber = pageNumber,
             PageSize = pageSize,
-            UserId = "Iuri",
+            UserId = user.Identity?.Name ?? string.Empty,
             FinalInterval = endDate,
             InitialInterval = startDate,
         };
         
         var response = await handler.GetByPeriodAsync(request);
         return response.IsSuccess
-            ? TypedResults.Ok(response.Data)
+            ? TypedResults.Ok(response)
             : TypedResults.BadRequest(response.Data);
     }
 }

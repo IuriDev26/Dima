@@ -12,7 +12,7 @@ public class Transaction : Base
     public ETransactionType Type { get; set; } = ETransactionType.Withdraw;
     public decimal Amount { get; set; }
 
-    public int CategoryId { get; set; }
+    public long CategoryId { get; set; }
     public Category Category { get; set; } = null!;
     public string UserId { get; set; } = string.Empty;
 }

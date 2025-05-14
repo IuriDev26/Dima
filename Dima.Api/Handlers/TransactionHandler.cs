@@ -21,7 +21,7 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
                 PaidOrReceivedAt = request.PaidOrReceivedAt,
                 Title = request.Title,
                 Type = request.Type,
-                UserId = "Iuri"
+                UserId = request.UserId
             };
 
             await context.Transactions.AddAsync(transaction);
@@ -49,7 +49,7 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
             transaction.PaidOrReceivedAt = request.PaidOrReceivedAt;
             transaction.Title = request.Title;
             transaction.Type = request.Type;
-            transaction.UserId = "Iuri";
+            transaction.UserId = request.UserId;
             
             context.Transactions.Update(transaction);
             await context.SaveChangesAsync();
@@ -66,7 +66,8 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
     {
         try
         {
-            var transaction = await context.Transactions.FirstOrDefaultAsync(transaction => transaction.Id == request.Id);
+            var transaction = await context.Transactions.FirstOrDefaultAsync(transaction => transaction.Id == request.Id
+            && transaction.UserId == request.UserId);
             
             if (transaction == null)
                 return new Response<Transaction?>(null, message: "Transaction not found", code:500);
@@ -87,7 +88,8 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
         try
         {
             var transaction = await context.Transactions.AsNoTracking()
-                .FirstOrDefaultAsync(transaction => transaction.Id == request.Id);
+                .FirstOrDefaultAsync(transaction => transaction.Id == request.Id 
+                                                    && transaction.UserId == request.UserId);
             
             return transaction == null 
                 ? new Response<Transaction?>(null, message: "Transaction not found", code:500) 
@@ -103,16 +105,17 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
     {
         try
         {
-            var initialInterval = request.InitialInterval ?? new DateTime().FirstDay();
-            var finalInterval = request.FinalInterval ?? new DateTime().LastDay();
+            var initialInterval = request.InitialInterval ?? DateTime.Now.FirstDay();
+            var finalInterval = request.FinalInterval ?? DateTime.Now.LastDay();
             
             var transactions = await context.Transactions.AsNoTracking()
                 .Where(transaction => transaction.CreatedAt >= initialInterval &&
-                                      transaction.CreatedAt <= finalInterval)
+                                      transaction.CreatedAt <= finalInterval &&
+                                      transaction.UserId == request.UserId)
                 .ToListAsync();
 
             return transactions.Count == 0 
-                ? new PagedResponse<List<Transaction?>>(null, message: "Erro ao buscar transações") 
+                ? new PagedResponse<List<Transaction?>>(null, message: "Não foram encontradas transações para o filtro especificado") 
                 : new PagedResponse<List<Transaction?>>(transactions!, request.PageNumber, request.PageSize, transactions.Count);
         }
         catch

@@ -25,7 +25,8 @@ public class CategoryHandler : ICategoryHandler
             {
                 Title = request.Title,
                 Description = request.Description,
-                UserId = request.UserId
+                UserId = request.UserId,
+                
             };
             await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
