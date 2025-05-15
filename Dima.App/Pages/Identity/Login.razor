@@ -1,0 +1,41 @@
+@page "/login"
+@layout LoginLayout
+
+<MudGrid Justify="Justify.Center">
+    <MudItem xs="6">
+        <MudPaper Class="mud-width-full pa-8" Elevation="8">
+            <div class="d-flex justify-center mb-10">
+                <img src="imgs/dima.png" alt="" width="250">
+            </div>
+            <MudForm @ref="Form">
+                <MudTextField Variant="Variant.Text"
+                              Label="E-mail"
+                              @bind-Value="Email"
+                              Required="true"
+                              RequiredError="O E-mail não pode ser vazio"
+                              InputType="InputType.Email"
+                              T="string"
+                              Class="my-5"/>
+                <MudTextField Label="Senha"
+                              Required="true"
+                              RequiredError="Informe a senha"
+                              InputType="InputType.Password"
+                              T="string"
+                              Class="my-5"/>
+                <div class="d-flex mt-10">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary">Entrar</MudButton>
+                    <MudSpacer></MudSpacer>
+                    <MudButton Href="/register" Variant="Variant.Outlined" Color="Color.Primary">Registre-se</MudButton>
+                </div>
+            </MudForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+
+@code {
+
+    public MudForm? Form { get; set; }
+    public string Email { get; set; } = string.Empty;
+
+}
