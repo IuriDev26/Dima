@@ -10,12 +10,12 @@ namespace Dima.Api.Common.Extensions;
 public static class BuilderExtension
 {
 
-    public static void AddConfiguraions(this WebApplicationBuilder builder)
+    public static void AddConfigurations(this WebApplicationBuilder builder)
     {
         Configuration.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
                                          ?? string.Empty;
         Configuration.FrontEndUrl = builder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
-        Configuration.FrontEndUrl = builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
+        Configuration.BackEndUrl = builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
     }
     public static void AddSecurity(this WebApplicationBuilder builder)
     {

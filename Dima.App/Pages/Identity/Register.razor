@@ -1,4 +1,4 @@
-@page "/login"
+@page "/register"
 @layout LoginLayout
 
 <MudGrid Justify="Justify.Center">
@@ -7,20 +7,20 @@
             <div class="d-flex justify-center mb-10">
                 <img src="imgs/dima.png" alt="" width="250">
             </div>
-            <EditForm Model="@User" OnValidSubmit="LoginAsync" FormName="Login">
+            <EditForm Model="@NewUser" OnValidSubmit="CreateNewUserAsync" FormName="RegisterNewUser">
                 <MudTextField
                     T="string"
                     Label="E-mail"
-                    @bind-Value="@User.Email"
-                    For="@(() => User.Email)"
+                    @bind-Value="@NewUser.Email"
+                    For="@(() => NewUser.Email)"
                     InputType="InputType.Email"
-                />
-
+                    />
+                
                 <MudTextField
                     T="string"
                     Label="Senha"
-                    @bind-Value="@User.Password"
-                    For="@(() => User.Password)"
+                    @bind-Value="@NewUser.Password"
+                    For="@(() => NewUser.Password)"
                     InputType="InputType.Password"
                 />
                 <div class="d-flex mt-10">
@@ -30,20 +30,12 @@
                     }
                     else
                     {
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Login</MudButton>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Registrar</MudButton>
                         <MudSpacer></MudSpacer>
-                        <MudButton Href="/register" Variant="Variant.Outlined" Color="Color.Primary">Criar uma conta</MudButton>
+                        <MudButton Href="/login" Variant="Variant.Outlined" Color="Color.Primary">Já tenho uma conta</MudButton>
                     }
-                </div>  
+                </div>
             </EditForm>
         </MudPaper>
     </MudItem>
 </MudGrid>
-
-
-@code {
-
-    public MudForm? Form { get; set; }
-    public string Email { get; set; } = string.Empty;
-
-}

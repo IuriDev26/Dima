@@ -3,7 +3,7 @@ using Dima.Api.Common.Extensions;
 using Dima.Api.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.AddConfiguraions();
+builder.AddConfigurations();
 builder.AddSecurity();
 builder.AddDbContexts();
 builder.AddSwagger();
@@ -14,6 +14,7 @@ var app = builder.Build();
 app.AddSwagger();
 app.MapEndpoints();
 app.UseCors(Configuration.CorsPolicyName);
+app.UseSecurity();
 app.Run();
 
 
