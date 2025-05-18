@@ -1,0 +1,98 @@
+﻿@using Dima.App.Security
+@using Dima.Core.Handlers
+@using MudBlazor.Utilities
+@inherits LayoutComponentBase
+@inject IIdentityHandler IdentityHandler
+@inject ISnackbar Snackbar
+@inject NavigationManager Navigator
+@inject ICookieAuthenticationStateProvider AuthenticationStateProvider
+
+<MudThemeProvider @ref="_systemThemeProvider" @bind-IsDarkMode="_isDarkMode" Theme="Configuration.Theme"/>
+<MudSnackbarProvider/>
+
+<AuthorizeView>
+    <Authorized>
+
+        <MudLayout>
+            <MudAppBar>
+                <MudText Typo="Typo.h5" >DIMA</MudText>
+                <MudSpacer/>
+                <MudSwitch @bind-Value="_isDarkMode"/>
+
+                @if (isLefting)
+                {
+                    <MudProgressCircular Color="Color.Info" Indeterminate="true"/>
+                }
+                else
+                {
+                    <MudButton OnClick="LogoutAsync">Logout</MudButton>
+                }
+
+            </MudAppBar>
+            <MudDrawer 
+                Variant="DrawerVariant.Mini" 
+                Color="Color.Secondary" 
+                OpenMiniOnHover="true" 
+                @bind-Open="_isDrawerOpened"
+                ClipMode="DrawerClipMode.Always"
+                >
+                <NavMenu/>
+            </MudDrawer>
+            <MudMainContent>
+                <MudContainer>
+                    @Body
+                </MudContainer>
+            </MudMainContent>
+        </MudLayout>
+    </Authorized>
+</AuthorizeView>
+
+@code{
+    private bool _isDrawerOpened = false;
+    private bool _isDarkMode = true;
+    private MudThemeProvider _systemThemeProvider = null!;
+    private bool isLefting { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var isAuthenticated = await AuthenticationStateProvider.CheckAuthenticatedAsync();
+        
+        if (!isAuthenticated)
+            Navigator.NavigateTo("/login");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _isDarkMode = await _systemThemeProvider.GetSystemPreference();
+            await _systemThemeProvider.WatchSystemPreference(OnSystemChangePreferences);
+            StateHasChanged();
+        }
+    }
+
+    private Task OnSystemChangePreferences(bool newValue)
+    {
+        _isDarkMode = newValue;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private async Task LogoutAsync()
+    {
+        try
+        {
+            isLefting = true;
+            var response = await IdentityHandler.LogoutAsync();
+            Navigator.NavigateTo("/login");   
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            isLefting = false;
+        }
+    }
+}

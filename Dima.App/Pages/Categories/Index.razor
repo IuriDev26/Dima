@@ -1,0 +1,12 @@
+@page "/categories"
+
+<MudText Typo="Typo.h3">Categories</MudText>
+
+<MudDataGrid Items="@Categories">
+    <Columns>
+        <PropertyColumn Property="@( x => x.Id )"/>
+        <PropertyColumn Property="@( x => x.Title )"/>
+        <PropertyColumn Property="@( x => x.Description )"/>
+    </Columns>
+</MudDataGrid>
+

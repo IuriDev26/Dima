@@ -1,0 +1,37 @@
+@page "/categories/create"
+
+<MudText Typo="Typo.h3">Criar nova categoria</MudText>
+
+<MudPaper>
+    <EditForm Model="@Category" FormName="CreateCategory" OnValidSubmit="CreateCategory">
+        
+        <DataAnnotationsValidator/>
+        
+        <MudTextField
+            T="string"
+            Label="Title"
+            Placeholder="Digite a Título da nova categoria"
+            @bind-Value="@Category.Title"
+            InputType="InputType.Text"
+            Required="true"/>
+
+        <MudTextField
+            T="string"
+            Label="Description"
+            Placeholder="Digite a descrição da nova categoria"
+            @bind-Value="@Category.Description"
+            InputType="InputType.Text"/>
+
+        @if (IsLoading)
+        {
+            <MudProgressCircular Indeterminate="true" Color="Color.Info"/>
+        }
+        else
+        {
+            <MudButton ButtonType="ButtonType.Submit">Criar</MudButton>
+            <MudButton Href="/categories">Voltar</MudButton>
+        }
+    </EditForm>
+</MudPaper>
+
+

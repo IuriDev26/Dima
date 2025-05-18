@@ -44,7 +44,7 @@ public class CategoryHandler(IHttpClientFactory httpClientFactory) : ICategoryHa
             ? Configuration.DefaultPageSize 
             : request.PageSize;
         
-        var url = $"$v1/categories?pageSize={pageNumber}&pageNumber={pageSize}";
+        var url = $"v1/categories?pageSize={pageNumber}&pageNumber={pageSize}";
         
         return await _client.GetFromJsonAsync<PagedResponse<List<Category>>>(url)
             ?? new PagedResponse<List<Category>>(null, 500, "Erro ao buscar categorias");

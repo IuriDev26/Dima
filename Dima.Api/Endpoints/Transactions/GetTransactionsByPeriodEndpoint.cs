@@ -18,16 +18,16 @@ public class GetTransactionsByPeriodEndpoint : IEndpoint
     
     
     private static async Task<IResult> HandlerAsync(ITransactionHandler handler, 
-        [FromQuery] int pageNumber, 
-        [FromQuery] int pageSize,
+        [FromQuery] int? pageNumber, 
+        [FromQuery] int? pageSize,
         [FromQuery] DateTime? startDate,
         [FromQuery] DateTime? endDate,
         ClaimsPrincipal user) 
     {
         var request = new GetByPeriodRequest()
         {
-            PageNumber = pageNumber,
-            PageSize = pageSize,
+            PageNumber = pageNumber ?? Configuration.DefaultPageNumber,
+            PageSize = pageSize ?? Configuration.DefaultPageSize,
             UserId = user.Identity?.Name ?? string.Empty,
             FinalInterval = endDate,
             InitialInterval = startDate,
