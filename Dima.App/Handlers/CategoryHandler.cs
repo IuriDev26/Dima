@@ -19,20 +19,20 @@ public class CategoryHandler(IHttpClientFactory httpClientFactory) : ICategoryHa
 
     public async Task<Response<Category?>> UpdateAsync(UpdateCategoryRequest request)
     {
-        var response = await _client.PutAsJsonAsync($"$v1/categories/{request.Id}", request);
+        var response = await _client.PutAsJsonAsync($"v1/categories/{request.Id}", request);
         return await response.Content.ReadFromJsonAsync<Response<Category?>>()
                ?? new Response<Category?>(null, 500, "Erro ao atualizar categoria");
     }
 
     public async Task<Response<Category?>> DeleteAsync(DeleteCategoryRequest request)
     {
-        var response = await _client.DeleteAsync($"$v1/categories/{request.Id}");
+        var response = await _client.DeleteAsync($"v1/categories/{request.Id}");
         return await response.Content.ReadFromJsonAsync<Response<Category?>>()
                ?? new Response<Category?>(null, 500, "Erro ao deletar categoria");
     }
 
     public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
-    => await _client.GetFromJsonAsync<Response<Category?>>($"$v1/categories/{request.Id}")
+    => await _client.GetFromJsonAsync<Response<Category?>>($"v1/categories/{request.Id}")
         ?? new Response<Category?>(null, 500, "Erro ao buscar categoria");
 
     public async Task<PagedResponse<List<Category>>> GetAllAsync(GetAllCategoriesRequest request)
@@ -44,7 +44,7 @@ public class CategoryHandler(IHttpClientFactory httpClientFactory) : ICategoryHa
             ? Configuration.DefaultPageSize 
             : request.PageSize;
         
-        var url = $"v1/categories?pageSize={pageNumber}&pageNumber={pageSize}";
+        var url = $"v1/categories?pageSize={pageSize}&pageNumber={pageNumber}";
         
         return await _client.GetFromJsonAsync<PagedResponse<List<Category>>>(url)
             ?? new PagedResponse<List<Category>>(null, 500, "Erro ao buscar categorias");

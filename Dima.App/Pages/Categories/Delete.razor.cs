@@ -32,7 +32,7 @@ public partial class Delete : ComponentBase
 
     #region Methods
 
-    private async Task UpdateCategory()
+    private async Task DeleteCategory()
     {
         try
         {
@@ -81,6 +81,10 @@ public partial class Delete : ComponentBase
         catch (Exception ex)
         {
             Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 

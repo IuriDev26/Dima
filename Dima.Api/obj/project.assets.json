@@ -5294,32 +5294,40 @@
     ]
   },
   "packageFolders": {
-    "/home/iuridev26/.nuget/packages/": {}
+    "C:\\Users\\ESTAGIARIOTI\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Api/Dima.Api.csproj",
+      "projectUniqueName": "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Api\\Dima.Api.csproj",
       "projectName": "Dima.Api",
-      "projectPath": "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Api/Dima.Api.csproj",
-      "packagesPath": "/home/iuridev26/.nuget/packages/",
-      "outputPath": "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Api/obj/",
+      "projectPath": "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Api\\Dima.Api.csproj",
+      "packagesPath": "C:\\Users\\ESTAGIARIOTI\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Api\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/home/iuridev26/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\ESTAGIARIOTI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Core/Dima.Core.csproj": {
-              "projectPath": "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Core/Dima.Core.csproj"
+            "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Core\\Dima.Core.csproj": {
+              "projectPath": "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Core\\Dima.Core.csproj"
             }
           }
         }
@@ -5328,6 +5336,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -5364,12 +5377,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.14, 8.0.14]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -5378,7 +5385,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.114/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

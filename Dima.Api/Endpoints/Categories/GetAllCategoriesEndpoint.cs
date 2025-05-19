@@ -31,7 +31,7 @@ public class GetAllCategoriesEndpoint : IEndpoint
         
         var response = await handler.GetAllAsync(request);
         return response.IsSuccess
-            ? TypedResults.Ok(response.Data)
-            : TypedResults.BadRequest(response.Data);
+            ? TypedResults.Ok(response)
+            : TypedResults.BadRequest(response);
     }
 }

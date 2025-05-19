@@ -51,6 +51,10 @@ public partial class Update : ComponentBase
         {
             Snackbar.Add(ex.Message, Severity.Error);
         }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     #endregion
@@ -62,7 +66,7 @@ public partial class Update : ComponentBase
         try
         {
             IsLoading = true;
-
+            
             var request = new GetCategoryByIdRequest(Id);
 
             var response = await Handler.GetByIdAsync(request);
@@ -83,6 +87,10 @@ public partial class Update : ComponentBase
         catch (Exception ex)
         {
             Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            IsLoading = false;
         }
     }
 

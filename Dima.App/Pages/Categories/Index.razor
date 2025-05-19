@@ -1,12 +1,25 @@
 @page "/categories"
 
-<MudText Typo="Typo.h3">Categories</MudText>
+<MudText Class="pt-8" Typo="Typo.h3">Categories</MudText>
+
+<div class="d-flex justify-end mb-4">
+    <MudButton Href="/categories/create" Color="Color.Primary" Variant="Variant.Filled">Nova Categoria</MudButton>
+</div>
 
 <MudDataGrid Items="@Categories">
     <Columns>
-        <PropertyColumn Property="@( x => x.Id )"/>
         <PropertyColumn Property="@( x => x.Title )"/>
         <PropertyColumn Property="@( x => x.Description )"/>
+        <TemplateColumn>
+            <CellTemplate>
+                <MudStack>
+                    <MudMenu Icon="@Icons.Material.Filled.MoreVert">
+                        <MudMenuItem Href=@($"categories/update/{context.Item!.Id}") >Editar</MudMenuItem>
+                        <MudMenuItem Href=@($"categories/delete/{context.Item!.Id}")>Excluir</MudMenuItem>
+                    </MudMenu>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
     </Columns>
 </MudDataGrid>
 

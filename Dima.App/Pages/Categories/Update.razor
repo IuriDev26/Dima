@@ -1,35 +1,47 @@
 @page "/categories/update/{id:long}"
 
-<MudText Typo="Typo.h3">Criar nova categoria</MudText>
 
-<MudPaper>
-    <EditForm Model="@Category" FormName="UpdateCategory" OnValidSubmit="UpdateCategory">
+@if (IsLoading)
+{
+    <LoadingComponent Message="Carregando categoria"></LoadingComponent>
+}
+else
+{
+    <MudText Class="pt-8 pb-4" Typo="Typo.h3">Editar Categoria</MudText>
+
+    <MudPaper Class="pa-4">
+        <EditForm Model="@Category" FormName="UpdateCategory" OnValidSubmit="UpdateCategory">
         
-        <DataAnnotationsValidator/>
+            <DataAnnotationsValidator/>
         
-        <MudTextField
-            T="string"
-            Label="Title"
-            Placeholder="Digite a Título da nova categoria"
-            @bind-Value="@Category.Title"
-            InputType="InputType.Text"
-            Required="true"/>
+            <MudTextField
+                T="string"
+                Label="Título"
+                Placeholder="Digite a Título da nova categoria"
+                @bind-Value="@Category.Title"
+                InputType="InputType.Text"
+                Required="true"
+                Class="mb-6"/>
 
-        <MudTextField
-            T="string"
-            Label="Description"
-            Placeholder="Digite a descrição da nova categoria"
-            @bind-Value="@Category.Description"
-            InputType="InputType.Text"/>
+            <MudTextField
+                T="string"
+                Label="Descrição"
+                Placeholder="Digite a descrição da nova categoria"
+                @bind-Value="@Category.Description"
+                InputType="InputType.Text"/>
 
-        @if (IsLoading)
-        {
-            <MudProgressCircular Indeterminate="true" Color="Color.Info"/>
-        }
-        else
-        {
-            <MudButton ButtonType="ButtonType.Submit">Criar</MudButton>
-            <MudButton Href="/categories">Voltar</MudButton>
-        }
-    </EditForm>
-</MudPaper>
+            <div class="mt-6">
+                @if (IsLoading)
+                {
+                    <MudProgressCircular Indeterminate="true" Color="Color.Info"/>
+                }
+                else
+                {
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Salvar</MudButton>
+                    <MudButton Href="/categories">Voltar</MudButton>
+                }
+            </div>
+        </EditForm>
+    </MudPaper>
+}
+
