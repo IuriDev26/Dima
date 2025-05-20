@@ -1,32 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Core\\Dima.Core.csproj": {}
+    "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Core/Dima.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Core\\Dima.Core.csproj": {
+    "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Core/Dima.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Core\\Dima.Core.csproj",
+        "projectUniqueName": "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Core/Dima.Core.csproj",
         "projectName": "Dima.Core",
-        "projectPath": "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Core\\Dima.Core.csproj",
-        "packagesPath": "C:\\Users\\ESTAGIARIOTI\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Core\\obj\\",
+        "projectPath": "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Core/Dima.Core.csproj",
+        "packagesPath": "/home/iuridev26/.nuget/packages/",
+        "outputPath": "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Core/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ESTAGIARIOTI\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/iuridev26/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,11 +32,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -60,12 +48,18 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.14, 8.0.14]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.114/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

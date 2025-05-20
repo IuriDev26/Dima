@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9bo3t7EJgg0=",
+  "dgSpecHash": "Xm2nKzCoComNxrbvrX4cvnyGEoQ5KyBV58JJOWhe+EnuHa3fmTBcMylJNQA5a95CL3HjkoDme6tQ0Z0gUotMRw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ESTAGIARIOTI\\Documents\\Repositories\\Dima\\Dima.Core\\Dima.Core.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/iuridev26/Development/Learning/.NET/Dima/Dima.Core/Dima.Core.csproj",
+  "expectedPackageFiles": [
+    "/home/iuridev26/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.14/microsoft.aspnetcore.app.ref.8.0.14.nupkg.sha512"
+  ],
   "logs": []
 }

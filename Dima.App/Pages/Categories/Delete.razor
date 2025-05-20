@@ -10,7 +10,7 @@ else
     <MudText Class="pt-8 pb-4" Typo="Typo.h3">Editar Categoria</MudText>
 
     <MudPaper Class="pa-4">
-        <EditForm Model="@Category" FormName="DeleteCategory" OnValidSubmit="DeleteCategory">
+        <EditForm Model="@Category" FormName="DeleteCategory" OnValidSubmit="OnDeleteClickAsync ">
 
             <DataAnnotationsValidator/>
 

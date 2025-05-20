@@ -11,6 +11,8 @@ public partial class Index : ComponentBase
     #region Properties
 
     private List<Category> Categories { get; set; } = new();
+    
+    public string SearchString { get; set; } = string.Empty;
 
     #endregion
 
@@ -44,6 +46,25 @@ public partial class Index : ComponentBase
             Snackbar.Add(ex.Message, Severity.Error);
         }
     }
+
+    #endregion
+
+    #region Methods
+
+    public Func<Category, bool> Filter => category =>
+    {
+        if (string.IsNullOrEmpty(SearchString))
+            return true;
+
+        if (category.Id.ToString().Contains(SearchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        
+        if (category.Title.Contains(SearchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        
+        return category.Description is not null 
+               && category.Description.Contains(SearchString, StringComparison.OrdinalIgnoreCase);
+    };
 
     #endregion
 }

@@ -17,5 +17,5 @@ public class CreateTransactionRequest : Request
     public decimal Amount { get; set; }
 
     [Required(ErrorMessage = "Categoria é obrigatória")]
-    public int CategoryId { get; set; }
+    public long CategoryId { get; set; }
 }

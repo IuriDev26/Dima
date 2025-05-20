@@ -6,15 +6,26 @@
     <MudButton Href="/categories/create" Color="Color.Primary" Variant="Variant.Filled">Nova Categoria</MudButton>
 </div>
 
-<MudDataGrid Items="@Categories">
+<MudDataGrid Items="@Categories"
+             QuickFilter="@Filter">
+    <ToolBarContent>
+        <MudTextField
+            Class="mb-4"
+            Style="width: 50%"
+            Placeholder="Buscar"
+            Adornment="Adornment.Start"
+            AdornmentIcon="@Icons.Material.Filled.Search"
+            @bind-Value="@SearchString"
+            Immediate="true"/>
+    </ToolBarContent>
     <Columns>
-        <PropertyColumn Property="@( x => x.Title )"/>
-        <PropertyColumn Property="@( x => x.Description )"/>
+        <PropertyColumn Property="@(x => x.Title)"/>
+        <PropertyColumn Property="@(x => x.Description)"/>
         <TemplateColumn>
             <CellTemplate>
                 <MudStack>
                     <MudMenu Icon="@Icons.Material.Filled.MoreVert">
-                        <MudMenuItem Href=@($"categories/update/{context.Item!.Id}") >Editar</MudMenuItem>
+                        <MudMenuItem Href=@($"categories/update/{context.Item!.Id}")>Editar</MudMenuItem>
                         <MudMenuItem Href=@($"categories/delete/{context.Item!.Id}")>Excluir</MudMenuItem>
                     </MudMenu>
                 </MudStack>

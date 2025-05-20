@@ -27,6 +27,9 @@ public partial class Delete : ComponentBase
     
     [Inject]
     private NavigationManager Navigator { get; set; } = null!;
+    
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
 
     #endregion
 
@@ -49,6 +52,16 @@ public partial class Delete : ComponentBase
         {
             Snackbar.Add(ex.Message, Severity.Error);
         }
+    }
+
+    private async Task OnDeleteClickAsync()
+    {
+        var userChoice = await DialogService.ShowMessageBox("Atenção"
+            , $"Deseja realemente excluir a categoria: {Category.Title}?",
+            yesText: "Sim", noText: "Não");
+
+        if (userChoice is not null && userChoice == true)
+            await DeleteCategory();
     }
 
     #endregion
