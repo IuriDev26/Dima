@@ -1,5 +1,73 @@
 @page "/transactions"
+@using Dima.Core.Enums
 
-<MudText Typo="Typo.h3"Transações></MudText>
+<MudText Typo="Typo.h3" Class="py-6">Transações</MudText>
+
+<div class="d-flex justify-end">
+    <MudButton 
+        Class="mb-4"
+        StartIcon="@Icons.Material.Filled.Add"
+        Href="/transactions/create"
+        Color="Color.Primary"
+        Variant="Variant.Filled"
+        >Nova Transação</MudButton>
+</div>
+
+<MudDataGrid 
+    Items="@Transactions"
+    QuickFilter="Filter"
+    >
+    <ToolBarContent>
+        <MudTextField 
+            Placeholder="Buscar"
+            Adornment="Adornment.Start"
+            AdornmentIcon="@Icons.Material.Filled.Search"
+            @bind-Value="SearchString"
+            Style="width: 30%"
+            Immediate="true"
+            />
+    </ToolBarContent>
+    <Columns>
+        <PropertyColumn Property="@(x => x.Title)" Title="Título"/>
+        <TemplateColumn>
+            <CellTemplate>
+                @switch (context.Item?.Type)
+                {
+                    case ETransactionType.Deposit:
+                        <MudChip Variant="Variant.Filled" Color="Color.Success">Entrada</MudChip>
+                        break;
+                    case ETransactionType.Withdraw:
+                        <MudChip Variant="Variant.Filled" Color="Color.Error">Saída</MudChip>
+                        break;
+                }
+            </CellTemplate>
+        </TemplateColumn>
+        <PropertyColumn Property="@(x => x.Amount)" Format="C" Title="Valor">
+            <FooterTemplate>
+                <MudText Typo="Typo.subtitle1" >
+                    @Transactions.Sum( transaction => transaction.Amount).ToString("C")
+                </MudText>
+            </FooterTemplate>
+        </PropertyColumn>
+        <PropertyColumn Property="@(x => x.CreatedAt)" Title="Data"/>
+        <TemplateColumn>
+            <CellTemplate>
+                <MudStack Row>
+                    <div class="d-flex justify-end" >
+                        <MudIconButton 
+                            Icon="@Icons.Material.Filled.Edit"
+                            Href=@($"/transactions/update/{context.Item?.Id}")
+                        />
+                        
+                        <MudIconButton
+                            Icon="@Icons.Material.Filled.Delete"
+                            OnClick="@( () => OnClickDeleteButtonAsync(context.Item!.Id, context.Item.Title) )"
+                        />
+                    </div>
+                </MudStack>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+</MudDataGrid>
 
 
