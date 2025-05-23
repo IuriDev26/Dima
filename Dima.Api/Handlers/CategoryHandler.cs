@@ -111,7 +111,10 @@ public class CategoryHandler : ICategoryHandler
     {
         try
         {
-            var query = _context.Categories.AsNoTracking().Where(category => category.UserId == request.UserId);
+            var query = _context
+                .Categories
+                .AsNoTracking()
+                .Where(category => category.UserId == request.UserId);
             
             var categories = await query
                 .Skip((request.PageNumber - 1) * request.PageSize)

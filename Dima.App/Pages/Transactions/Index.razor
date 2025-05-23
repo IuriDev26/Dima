@@ -3,14 +3,49 @@
 
 <MudText Typo="Typo.h3" Class="py-6">Transações</MudText>
 
-<div class="d-flex justify-end">
-    <MudButton 
+<div class="d-flex align-center mb-8">
+    <MudSelect
+        T="int"
+        Variant="Variant.Outlined"
+        Class="mr-6"
+        @bind-Value="@SearchMonth"
+        Label="Mês">
+        
+        @for (var month = 1; month <= 12; month++)
+        {
+            var date = new DateTime(DateTime.Now.Year, month, 1);
+            
+            <MudSelectItem T="int" Value="@month">@date.ToString("MMMM")</MudSelectItem>
+        }
+    </MudSelect>
+
+    <MudSelect Label="Ano"
+               @bind-Value="@SearchYear"
+               Variant="Variant.Outlined">
+        
+        @for (var year = 0; year <= 4; year++)
+        {
+            var yearLabel = DateTime.Now.AddYears(year * (-1)).Year;
+            <MudSelectItem T="int" >@yearLabel</MudSelectItem>
+        }
+    </MudSelect>
+
+    <MudSpacer/>
+    
+    <MudButton
+        Class="mb-4 mr-2"
+        Style="font-size: 1em"
+        StartIcon="@Icons.Material.Filled.Search"
+        Variant="Variant.Outlined"
+        OnClick="@OnClickSearchButtonAsync">Pesquisar</MudButton>
+    
+    <MudButton
         Class="mb-4"
+        Style="font-size: 1em"
         StartIcon="@Icons.Material.Filled.Add"
         Href="/transactions/create"
         Color="Color.Primary"
-        Variant="Variant.Filled"
-        >Nova Transação</MudButton>
+        Variant="Variant.Filled">Nova Transação</MudButton>
 </div>
 
 <MudDataGrid 
@@ -49,7 +84,7 @@
                 </MudText>
             </FooterTemplate>
         </PropertyColumn>
-        <PropertyColumn Property="@(x => x.CreatedAt)" Title="Data"/>
+        <PropertyColumn Property="@(x => x.PaidOrReceivedAt)" Title="Data"/>
         <TemplateColumn>
             <CellTemplate>
                 <MudStack Row>

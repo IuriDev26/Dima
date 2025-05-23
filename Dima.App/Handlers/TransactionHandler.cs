@@ -1,4 +1,6 @@
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Dima.Core.Common.Extensions;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
@@ -20,26 +22,26 @@ public class TransactionHandler(IHttpClientFactory httpClientFactory) : ITransac
 
     public async Task<Response<Transaction?>> UpdateAsync(UpdateTransactionRequest request)
     {
-        var response = await _client.PutAsJsonAsync($"$v1/transactions/{request.Id}", request);
+        var response = await _client.PutAsJsonAsync($"v1/transactions/{request.Id}", request);
         return await response.Content.ReadFromJsonAsync<Response<Transaction?>>() 
                ?? new Response<Transaction?>(null, 500, "Falha ao atualizar Transação");
     }
 
     public async Task<Response<Transaction?>> DeleteAsync(DeleteTransactionRequest request)
     {
-        var response = await _client.DeleteAsync($"$v1/transactions/{request.Id}");
+        var response = await _client.DeleteAsync($"v1/transactions/{request.Id}");
         return await response.Content.ReadFromJsonAsync<Response<Transaction?>>() 
                ?? new Response<Transaction?>(null, 500, "Falha ao deletar Transação");
     }
 
     public async Task<Response<Transaction?>> GetByIdAsync(GetByIdRequest request)
     {
-        var response = await _client.GetAsync($"$v1/transactions/{request.Id}");
+        var response = await _client.GetAsync($"v1/transactions/{request.Id}");
         return await response.Content.ReadFromJsonAsync<Response<Transaction?>>() 
                ?? new Response<Transaction?>(null, 500, "Falha ao buscar Transação");
     }
 
-    public async Task<PagedResponse<List<Transaction?>>> GetByPeriodAsync(GetByPeriodRequest request)
+    public async Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetByPeriodRequest request)
     {
         var format = "yyyy-MM-dd";
         
@@ -54,11 +56,11 @@ public class TransactionHandler(IHttpClientFactory httpClientFactory) : ITransac
         var startDate = (request.InitialInterval ?? DateTime.Now.FirstDay()).ToString(format);
         var finalDate = (request.FinalInterval ?? DateTime.Now.LastDay()).ToString(format);
         
-        var url = $"v1/transactions?pageSize={pageSize}&pageNumber={pageNumber}&startDate={startDate}&finalDate={finalDate}";
+        var url = $"v1/transactions?pageSize={pageSize}&pageNumber={pageNumber}&startDate={startDate}&endDate={finalDate}";
         
         var response = await _client.GetAsync(url);
-        return await response.Content.ReadFromJsonAsync<PagedResponse<List<Transaction?>>>()
-               ?? new PagedResponse<List<Transaction?>>(null, 500, "Erro ao buscar transações no período especificado");
+        return await response.Content.ReadFromJsonAsync<PagedResponse<List<Transaction>?>>()
+               ?? new PagedResponse<List<Transaction>?>(null, 500, "Erro ao buscar transações no período especificado");
 
     }
 }

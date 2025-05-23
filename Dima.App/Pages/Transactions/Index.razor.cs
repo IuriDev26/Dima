@@ -1,3 +1,4 @@
+using Dima.Core.Common.Extensions;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
@@ -11,19 +12,21 @@ public partial class Index : ComponentBase
     #region Properties
 
     private List<Transaction> Transactions { get; set; } = [];
+
+    private int PageNumber { get; set; } = 1;
+
+    private int PageSize { get; set; } = 10;
     
-    private int PageNumber { get; set; }
+    private int SearchMonth { get; set; } = DateTime.Now.Month;
     
-    private int PageSize { get; set; }
-    
-    private DateTime? StartDate { get; set; }
-    
-    private DateTime? EndDate { get; set; }
+    private int SearchYear { get; set; } = DateTime.Now.Year;
     
     private bool IsLoading { get; set; }
     
     public string SearchString { get; set; } = string.Empty;
-
+    
+    private List<DateTime> Years { get; set; } = [];
+    
     #endregion
 
     #region Services
@@ -41,35 +44,8 @@ public partial class Index : ComponentBase
 
     #region Overrides
 
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            IsLoading = true;
-
-            var request = new GetByPeriodRequest
-            {
-                PageNumber = PageNumber,
-                PageSize = PageSize,
-                InitialInterval = StartDate,
-                FinalInterval = EndDate
-            };
-            
-            var response = await TransactionHandler.GetByPeriodAsync(request);
-
-            if (response.IsSuccess)
-                Transactions = response.Data ?? [];
-
-        }
-        catch (Exception ex)
-        {
-            Snackbar.Add(ex.Message, Severity.Error);
-        }
-        finally
-        {
-            IsLoading = false;
-        }
-    }
+    protected override async Task OnInitializedAsync() => await GetTransactionsAsync();
+    
 
     #endregion
 
@@ -89,7 +65,11 @@ public partial class Index : ComponentBase
             var response = await TransactionHandler.DeleteAsync(request);
 
             if (response.IsSuccess)
+            {
                 Snackbar.Add(response.Message, Severity.Success);
+                Transactions.RemoveAll(transaction => transaction.Id == id);
+                StateHasChanged();
+            }
             else
             {
                 Snackbar.Add(response.Message, Severity.Error);
@@ -114,6 +94,39 @@ public partial class Index : ComponentBase
         if (userChoice != null && userChoice.Value)
             await DeleteAsync(id);
     }
+
+    private async Task GetTransactionsAsync()
+    {
+        try
+        {
+            IsLoading = true;
+
+            var baseDate = new DateTime(SearchYear, SearchMonth, 1);
+            
+            var request = new GetByPeriodRequest
+            {
+                PageNumber = PageNumber,
+                PageSize = PageSize,
+                InitialInterval = baseDate,
+                FinalInterval = new DateTime(SearchYear, SearchMonth, baseDate.LastDay().Day)
+            };
+            
+            var response = await TransactionHandler.GetByPeriodAsync(request);
+
+            if (response.IsSuccess)
+                Transactions = response.Data ?? [];
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+    
+    public async Task OnClickSearchButtonAsync() => await GetTransactionsAsync();
 
     #endregion
 

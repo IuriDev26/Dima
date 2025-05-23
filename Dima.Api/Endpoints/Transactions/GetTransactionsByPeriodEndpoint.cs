@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Dima.Api.Common.Api;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
@@ -36,6 +38,6 @@ public class GetTransactionsByPeriodEndpoint : IEndpoint
         var response = await handler.GetByPeriodAsync(request);
         return response.IsSuccess
             ? TypedResults.Ok(response)
-            : TypedResults.BadRequest(response.Data);
+            : TypedResults.BadRequest(response);
     }
 }

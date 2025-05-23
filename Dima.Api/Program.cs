@@ -1,6 +1,8 @@
+using System.Text.Json.Serialization;
 using Dima.Api;
 using Dima.Api.Common.Extensions;
 using Dima.Api.Endpoints;
+using Microsoft.AspNetCore.Http.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddConfigurations();

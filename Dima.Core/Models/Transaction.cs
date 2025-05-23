@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Dima.Core.Enums;
 
 namespace Dima.Core.Models;
@@ -13,6 +14,7 @@ public class Transaction : Base
     public decimal Amount { get; set; }
 
     public long CategoryId { get; set; }
+    
     public Category Category { get; set; } = null!;
     public string UserId { get; set; } = string.Empty;
 }

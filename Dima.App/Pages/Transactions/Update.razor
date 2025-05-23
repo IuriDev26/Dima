@@ -1,0 +1,64 @@
+@page "/transactions/update/{id:long}"
+@using Dima.Core.Enums
+
+<MudText Class="py-6" Typo="Typo.h3">Nova Transação</MudText>
+
+<MudPaper Class="pa-4">
+    <EditForm Model="@Transaction" OnValidSubmit="@UpdateTransaction">
+        
+        <MudTextField 
+            Placeholder="Título"
+            @bind-Value="@Transaction.Title"
+            Required="true"
+        />
+        
+        <MudSelect T="@ETransactionType" Required="true" Placeholder="Tipo de Transação" @bind-Value="Transaction.Type">
+            
+            <MudSelectItem T="@ETransactionType" Value="ETransactionType.Withdraw">
+                Saída
+            </MudSelectItem>
+
+            <MudSelectItem T="@ETransactionType" Value="ETransactionType.Deposit">
+                Entrada
+            </MudSelectItem>
+            
+        </MudSelect>
+
+        <MudDatePicker
+            Label="Data da Movimentação"
+            @bind-Date="@Transaction.PaidOrReceivedAt"
+            Required="true"
+        />
+        
+        <MudTextField 
+            T="decimal"
+            Label="Valor"
+            @bind-Value="@Transaction.Amount"
+            Format="C"
+            Required="true"
+        />
+        
+        <MudSelect T="long" Required="true" Placeholder="Categoria" @bind-Value="Transaction.CategoryId">
+            @foreach (var category in Categories)
+            {
+                <MudSelectItem T="long" Value="@category.Id">
+                    @category.Title
+                </MudSelectItem>
+            }
+        </MudSelect>
+        
+        <div class="mt-6">
+            
+            @if (IsLoading)
+            {
+                <MudProgressCircular Indeterminate="true" Color="Color.Info"/>
+            }
+            else
+            {
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Salvar</MudButton>
+                <MudButton Variant="Variant.Outlined" Href="/transactions">Voltar</MudButton>
+            }
+        </div>
+        
+    </EditForm>
+</MudPaper>

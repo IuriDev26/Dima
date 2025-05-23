@@ -31,6 +31,9 @@
     <Reference Include="Microsoft.AspNetCore.Components.Authorization">
       <HintPath>..\..\..\..\..\.nuget\packages\microsoft.aspnetcore.app.ref\8.0.14\ref\net8.0\Microsoft.AspNetCore.Components.Authorization.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Extensions">
+      <HintPath>..\..\..\..\..\.nuget\packages\microsoft.aspnetcore.app.ref\8.0.14\ref\net8.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

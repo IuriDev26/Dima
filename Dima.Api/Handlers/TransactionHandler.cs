@@ -101,26 +101,27 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
         }
     }
 
-    public async Task<PagedResponse<List<Transaction?>>> GetByPeriodAsync(GetByPeriodRequest request)
+    public async Task<PagedResponse<List<Transaction>?>> GetByPeriodAsync(GetByPeriodRequest request)
     {
         try
         {
             var initialInterval = request.InitialInterval ?? DateTime.Now.FirstDay();
             var finalInterval = request.FinalInterval ?? DateTime.Now.LastDay();
             
-            var transactions = await context.Transactions.AsNoTracking()
-                .Where(transaction => transaction.CreatedAt >= initialInterval &&
-                                      transaction.CreatedAt <= finalInterval &&
+            var transactions = await context.Transactions
+                .AsNoTracking()
+                .Where(transaction => transaction.PaidOrReceivedAt >= initialInterval &&
+                                      transaction.PaidOrReceivedAt <= finalInterval &&
                                       transaction.UserId == request.UserId)
                 .ToListAsync();
 
             return transactions.Count == 0 
-                ? new PagedResponse<List<Transaction?>>(null, message: "Não foram encontradas transações para o filtro especificado") 
-                : new PagedResponse<List<Transaction?>>(transactions!, request.PageNumber, request.PageSize, transactions.Count);
+                ? new PagedResponse<List<Transaction>?>(null, message: "Não foram encontradas transações para o filtro especificado") 
+                : new PagedResponse<List<Transaction>?>(transactions!, request.PageNumber, request.PageSize, transactions.Count);
         }
-        catch
+        catch (Exception ex)
         {
-            return new PagedResponse<List<Transaction?>>(null, 500, "Erro ao buscar transações");
+            return new PagedResponse<List<Transaction>?>(null, 500, "Erro ao buscar transações");
         }
     }
 }
