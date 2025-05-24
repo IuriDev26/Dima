@@ -1,0 +1,22 @@
+<MudCard  Style="width: 100%">
+    <MudCardHeader>
+        <MudText Typo="Typo.h6">Despesas por categoria</MudText>
+    </MudCardHeader>
+    <MudCardContent Class="d-flex justify-center">
+        @if (IsLoading)
+        {
+            <MudProgressCircular Indeterminate="true"/>
+        }
+        else
+        {
+            <MudChart
+                ChartType="ChartType.Line"
+                ChartSeries="@Data"
+                XAxisLabels="@Months.ToArray()"
+                Width="90%"
+                Height="250px"
+                AxisChartOptions="Options"/>
+        }
+        
+    </MudCardContent>
+</MudCard>

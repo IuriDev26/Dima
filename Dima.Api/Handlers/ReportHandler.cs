@@ -68,7 +68,7 @@ public class ReportHandler(AppDbContext context) : IReportHandler
         }
     }
 
-    public async Task<Response<List<FinancialSummary>?>> GetFinancialSummaryReportAsync(GetFinancialSummaryRequest request)
+    public async Task<Response<FinancialSummary?>> GetFinancialSummaryReportAsync(GetFinancialSummaryRequest request)
     {
         try
         {
@@ -82,14 +82,14 @@ public class ReportHandler(AppDbContext context) : IReportHandler
                 .Select(x => new FinancialSummary(request.UserId,
                     x.Where(z => z.Type == ETransactionType.Deposit).Sum(y => y.Amount),
                     x.Where(z => z.Type == ETransactionType.Withdraw).Sum(y => y.Amount)))
-                .ToListAsync();
+                .FirstOrDefaultAsync();
 
-            return new Response<List<FinancialSummary>?>(data, 200);
+            return new Response<FinancialSummary?>(data, 200);
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message + ex.StackTrace);
-            return new Response<List<FinancialSummary>?>(null, 500, "Erro ao obter Resumo Financeiro");
+            return new Response<FinancialSummary?>(null, 500, "Erro ao obter Resumo Financeiro");
         }
     }
 }

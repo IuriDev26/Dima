@@ -26,6 +26,7 @@ builder.Services.AddMudServices();
 builder.Services.AddTransient<IIdentityHandler, IdentityHandler>();
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
 builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
+builder.Services.AddTransient<IReportHandler, ReportHandler>();
 builder.Services.AddHttpClient(Configuration.HttpClientName, 
     client => client.BaseAddress = new Uri(Configuration.BackendUrl))
     .AddHttpMessageHandler<CookieHandler>();

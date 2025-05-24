@@ -12,3 +12,6 @@ WHERE Transactions.PaidOrReceivedAt
 GROUP BY Transactions.UserId,
     MONTH(Transactions.PaidOrReceivedAt),
     YEAR(Transactions.PaidOrReceivedAt))
+
+
+SELECT * FROM VIEW_INCOMES_AND_EXPENSES
