@@ -1,0 +1,43 @@
+@using System.Globalization
+<MudCard Style="width: 100%">
+    <div class="d-flex justify-space-between" style="width: 100%">
+        <MudCardHeader>
+            <MudText Typo="Typo.h6">Resumo Financeiro</MudText>
+        </MudCardHeader>'
+        <MudCardActions Class="mr-2">
+            <MudIconButton Icon="@(GetVisibilityIcon())" OnClick="@OnChangeVisibility"></MudIconButton>
+        </MudCardActions>    
+    </div>
+    <MudCardContent Class="d-flex justify-start">
+        @if (IsLoading)
+        {
+            <MudProgressCircular Indeterminate="true"/>
+        }
+        else
+        {
+            <div>
+                <MudText Class="mb-4" Typo="Typo.h3" Color="Color.Success">
+                    @if (IsValueVisible)
+                    {
+                        @FinancialSummary.Incomes.ToString("C")
+                    }
+                    else
+                    {
+                        @($"{CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol} ********")
+                    }
+                </MudText>
+                <MudText Typo="Typo.h6" Color="Color.Error">
+                    @if (IsValueVisible)
+                    {
+                        @FinancialSummary.Expenses.ToString("C")
+                    }
+                    else
+                    {
+                        @($"{CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol} ********")
+                    }
+                </MudText>
+            </div>
+        }
+
+    </MudCardContent>
+</MudCard>

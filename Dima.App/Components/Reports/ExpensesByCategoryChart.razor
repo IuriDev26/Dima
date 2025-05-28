@@ -2,10 +2,14 @@
     <MudCardHeader>
         <MudText Typo="Typo.h6">Despesas por categoria</MudText>
     </MudCardHeader>
-    <MudCardContent Class="d-flex justify-center">
+    <MudCardContent Class="d-flex justify-center align-center">
         @if (IsLoading)
         {
             <MudProgressCircular Indeterminate="true"/>
+        }
+        else if (@Expenses.Count == 0)
+        {
+            <MudText Typo="Typo.h5">Sem dados para exibir</MudText>    
         }
         else
         {

@@ -1,5 +1,6 @@
 using Dima.Api.Data;
 using Dima.Core.Common.Extensions;
+using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Transactions;
@@ -14,6 +15,8 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
     {
         try
         {
+            request.Amount = request.Type == ETransactionType.Withdraw ? -(request.Amount) : request.Amount;
+            
             var transaction = new Transaction()
             {
                 CategoryId = request.CategoryId,

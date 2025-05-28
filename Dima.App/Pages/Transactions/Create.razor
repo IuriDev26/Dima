@@ -6,13 +6,13 @@
 <MudPaper Class="pa-4">
     <EditForm Model="@Transaction" OnValidSubmit="@CreateTransaction">
         
-        <MudTextField 
-            Placeholder="Título"
+        <MudTextField Class="my-4"
+            Label="Título"
             @bind-Value="@Transaction.Title"
             Required="true"
         />
         
-        <MudSelect T="@ETransactionType" Required="true" Placeholder="Tipo de Transação" @bind-Value="Transaction.Type">
+        <MudSelect  Class="my-4" Label="Tipo de Transação" T="@ETransactionType" Required="true" Placeholder="Tipo de Transação" @bind-Value="Transaction.Type">
             
             <MudSelectItem T="@ETransactionType" Value="ETransactionType.Withdraw">
                 Saída
@@ -24,13 +24,14 @@
             
         </MudSelect>
 
-        <MudDatePicker
+        <MudDatePicker 
             Label="Data da Movimentação"
             @bind-Date="@Transaction.PaidOrReceivedAt"
             Required="true"
         />
         
-        <MudTextField 
+        <MudTextField
+            Class="my-4"
             T="decimal"
             Label="Valor"
             @bind-Value="@Transaction.Amount"
@@ -38,7 +39,7 @@
             Required="true"
         />
         
-        <MudSelect T="long" Required="true" Placeholder="Categoria" @bind-Value="Transaction.CategoryId">
+        <MudSelect Class="my-4"  T="long" Required="true" Placeholder="Categoria" @bind-Value="Transaction.CategoryId">
             @foreach (var category in Categories)
             {
                 <MudSelectItem T="long" Value="@category.Id">

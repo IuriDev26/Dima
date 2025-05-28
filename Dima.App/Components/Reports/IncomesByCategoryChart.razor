@@ -7,6 +7,10 @@
         {
             <MudProgressCircular Indeterminate="true"/>
         }
+        else if (@Incomes.Count == 0)
+        {
+            <MudText Class="py-12"  Typo="Typo.h5">Sem dados para exibir</MudText>    
+        }
         else
         {
             <MudChart
