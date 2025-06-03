@@ -8,8 +8,20 @@ public class Voucher
     public string Description { get; set; } = string.Empty;
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public bool IsActive => DateTime.Now >= StartDate && 
-                            DateTime.Now <= EndDate;
+
+    public bool IsActive
+    {
+        get
+        {
+            return DateTime.Now >= StartDate &&
+                   DateTime.Now <= EndDate;
+        }
+
+        set
+        {
+
+        }
+    } 
 
     public decimal Amount { get; set; }
 }

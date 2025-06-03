@@ -6,7 +6,7 @@ public class Order
 {
     public long Id { get; set; }
     public string Number { get; set; } = Guid.NewGuid().ToString("N")[..8];
-    public long UserId { get; set; }
+    public string UserId { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
     public long ProductId { get; set; }

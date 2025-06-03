@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\sample-data\weather.json" />
+    <_ContentIncludedByDefault Remove="Pages\Orders\Index.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,22 @@
     <Reference Include="Microsoft.AspNetCore.Http.Extensions">
       <HintPath>..\..\..\..\..\.nuget\packages\microsoft.aspnetcore.app.ref\8.0.14\ref\net8.0\Microsoft.AspNetCore.Http.Extensions.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Orders\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Pages\Orders\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Orders\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\Orders\**" />
   </ItemGroup>
 
 </Project>

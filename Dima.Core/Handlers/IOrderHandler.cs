@@ -8,7 +8,7 @@ public interface IOrderHandler
 {
     Task<Response<Order?>> CancelAsync(CancelOrderRequest request);
     Task<Response<Order?>> CreateAsync(CreateOrderRequest request);
-    Task<Response<List<Order>?>> GetAllAsync(GetAllOrdersRequest request);
+    Task<PagedResponse<List<Order>?>> GetAllAsync(GetAllOrdersRequest request);
     Task<Response<Order?>> GetByNumberAsync(GetOrderByNumberRequest request);
     Task<Response<Order?>> PayAsync(PayOrderRequest request);
     Task<Response<Order?>> RefundAsync(RefundOrderRequest request);

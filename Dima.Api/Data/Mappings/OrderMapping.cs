@@ -34,7 +34,7 @@ public class OrderMapping : IEntityTypeConfiguration<Order>
             .IsRequired();
         
         builder.Property(x => x.ExternalReference)
-            .IsRequired()
+            .IsRequired(false)
             .HasColumnType("NVARCHAR")
             .HasMaxLength(200);
 

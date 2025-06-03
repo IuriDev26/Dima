@@ -84,7 +84,9 @@ public class ReportHandler(AppDbContext context) : IReportHandler
                     x.Where(z => z.Type == ETransactionType.Withdraw).Sum(y => y.Amount)))
                 .FirstOrDefaultAsync();
 
-            return new Response<FinancialSummary?>(data, 200);
+            return data is null
+                ? new Response<FinancialSummary?>(new FinancialSummary(request.UserId, 0, 0), 200)
+                : new Response<FinancialSummary?>(data, 200);
         }
         catch (Exception ex)
         {

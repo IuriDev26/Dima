@@ -42,7 +42,7 @@ public partial class FinancialSummaryChart : ComponentBase
 
             if (!response.IsSuccess)
             {
-                Snackbar.Add(response.Message, Severity.Error);
+                Snackbar.Add(response.Message ?? string.Empty, Severity.Error);
                 return;
             }
 

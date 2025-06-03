@@ -38,5 +38,9 @@ public class VoucherMappingv : IEntityTypeConfiguration<Voucher>
         builder.Property(x => x.Amount)
             .IsRequired()
             .HasColumnType("MONEY");
+        
+        builder.Property(x => x.IsActive)
+            .IsRequired()
+            .HasColumnType("BIT");
     }
 }

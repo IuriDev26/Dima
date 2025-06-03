@@ -5,6 +5,7 @@ using Dima.App;
 using Dima.App.Handlers;
 using Dima.App.Security;
 using Dima.Core.Handlers;
+using Dima.Core.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http.Json;
 using MudBlazor.Services;
@@ -27,6 +28,9 @@ builder.Services.AddTransient<IIdentityHandler, IdentityHandler>();
 builder.Services.AddTransient<ICategoryHandler, CategoryHandler>();
 builder.Services.AddTransient<ITransactionHandler, TransactionHandler>();
 builder.Services.AddTransient<IReportHandler, ReportHandler>();
+builder.Services.AddTransient<IProductHandler, ProductHandler>();
+builder.Services.AddTransient<IOrderHandler, OrderHandler>();
+builder.Services.AddTransient<IVoucherHandler, VoucherHandler>();
 builder.Services.AddHttpClient(Configuration.HttpClientName, 
     client => client.BaseAddress = new Uri(Configuration.BackendUrl))
     .AddHttpMessageHandler<CookieHandler>();
