@@ -1,0 +1,23 @@
+@page "/premium/payment-fail"
+
+<div class="d-flex justify-center align-center" style="height: 93vh">
+    
+    <MudCard Style="width: 30vw; height: 40vh">
+        
+        <MudCardHeader Class="d-flex justify-center">
+            <MudIcon Class="mt-4" Style="width: 64px; height: 64px" Icon="@Icons.Material.Filled.Error" Color="Color.Error"/>
+        </MudCardHeader>
+
+        <MudCardContent>
+            <MudText Typo="Typo.h4" Align="Align.Center">Pagamento não processado</MudText>
+            <MudText Class="mt-8" Align="Align.Center" Typo="Typo.body1">Caso deseje concluir o pagamento tente novamente abaixo</MudText>
+        </MudCardContent>
+
+        <MudCardActions Class="d-flex justify-center pb-6">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/premium"
+                       EndIcon="@Icons.Material.Filled.KeyboardArrowRight">Tentar Novamente</MudButton>
+        </MudCardActions>
+        
+    </MudCard> 
+    
+</div>

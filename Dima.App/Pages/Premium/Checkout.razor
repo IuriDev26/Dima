@@ -1,6 +1,63 @@
-@page "/Premium"
-<h3>Premium</h3>
+@page "/premium/checkout/{OrderNumber}"
 
-@code {
-    
+@if (IsLoading)
+{
+    <LoadingComponent></LoadingComponent>
 }
+else
+{
+    <MudText Align="Align.Center" Class="my-8" Typo="Typo.h2">Premium</MudText>
+    <div class="d-flex justify-center">
+        <MudCard Class="pa-6" Style="width: 50vw">
+            <MudCardHeader Class="border-solid border-b-2 mud-border-primary">
+                <CardHeaderContent>
+                    <div class="d-flex justify-space-between align-center" style="width: 100%">
+                        <div>
+                            <MudText Typo="Typo.h4">@Order.Product.Title</MudText>
+                        </div>
+                        <div>
+                            <MudIcon Icon="@Icons.Material.Filled.Payment" Color="Color.Primary" Size="Size.Large"></MudIcon>
+                        </div>
+                    </div>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent Class="mt-4 border-solid border-b-2 mud-border-primary">
+                <div class="d-flex align-center justify-space-between">
+                    <div>
+                        <MudText Class="mb-4" Typo="Typo.body1">Valor do Plano</MudText>
+                        <MudText Typo="Typo.body2">Desconto do Voucher</MudText>
+                    </div>
+                    <div class="d-flex flex-column align-end">
+                        <MudText Class="mb-4" Typo="Typo.body1">@Order.Product.Amount.ToString("C")</MudText>
+                        <MudText Typo="Typo.body2" Color="Color.Success">@(Order.Voucher?.Amount.ToString("C") ?? 0.ToString("C"))</MudText>
+                    </div>
+                </div>
+
+                <div class="d-flex mt-8 mb-4 align-center">
+                    <MudTextField T="string"
+                                  Placeholder="1234-ABCD"
+                                  Label="Voucher"
+                                  Variant="Variant.Outlined"
+                                  @bind-Value="VoucherNumber"/>
+                    
+                    <MudButton Class="ml-4 py-3" Color="Color.Primary" Variant="Variant.Outlined">APLICAR CUPOM</MudButton>
+                </div>
+                
+                <div class="d-flex pt-4 justify-space-between">
+                    <MudText Typo="Typo.h6">Total</MudText>
+                    <MudText Typo="Typo.h6">@Order.Total.ToString("C")</MudText>
+                </div>
+                
+            </MudCardContent>
+            <MudCardActions Class="mt-4 d-flex justify-center">
+                <MudButton  OnClick="@PayOrderAsync" EndIcon="@Icons.Material.Filled.KeyboardArrowRight" Variant="Variant.Filled" Color="Color.Primary">Ir para o Pagamento</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </div>
+}
+
+
+
+
+
+

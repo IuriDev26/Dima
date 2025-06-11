@@ -36,6 +36,7 @@ public class CategoryHandler : ICategoryHandler
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             return new Response<Category?>(data:null, 500, "Erro ao criar categoria");
         }
     }
@@ -62,6 +63,7 @@ public class CategoryHandler : ICategoryHandler
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             return new Response<Category?>(data:null, 500, "Erro ao atualizar categoria");
         }
     }
@@ -84,6 +86,7 @@ public class CategoryHandler : ICategoryHandler
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             return new Response<Category?>(data:null, 500, "Erro ao deletar categoria");
         }
     }
@@ -92,17 +95,17 @@ public class CategoryHandler : ICategoryHandler
     {
         try
         {
-            var category = _context.Categories.AsNoTracking().FirstOrDefault(
+            var category = await _context.Categories.AsNoTracking().FirstOrDefaultAsync(
                 category => category.Id == request.Id && category.UserId == request.UserId
             );
 
-            if (category is null)
-                return new Response<Category?>(data:null, 400, "Categoria não encontrada");
-            
-            return new Response<Category?>(category, 200);
+            return category is null 
+                ? new Response<Category?>(data:null, 400, "Categoria não encontrada") 
+                : new Response<Category?>(category, 200);
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             return new Response<Category?>(data:null, 500, "Erro ao deletar categoria");
         }
     }
@@ -126,6 +129,7 @@ public class CategoryHandler : ICategoryHandler
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             return new PagedResponse<List<Category>>(data:null, 500, "Erro ao retornar categorias");
         }
     }

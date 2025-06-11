@@ -124,6 +124,7 @@ public class TransactionHandler(AppDbContext context) : ITransactionHandler
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             return new PagedResponse<List<Transaction>?>(null, 500, "Erro ao buscar transações");
         }
     }

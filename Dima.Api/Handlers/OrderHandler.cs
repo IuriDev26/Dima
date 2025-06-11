@@ -3,21 +3,22 @@ using Dima.Core.Enums;
 using Dima.Core.Handlers;
 using Dima.Core.Models;
 using Dima.Core.Requests.Orders;
+using Dima.Core.Requests.Stripe;
 using Dima.Core.Responses;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Dima.Api.Handlers;
 
-public class OrderHandler(AppDbContext context) : IOrderHandler
+public class OrderHandler(AppDbContext context, IStripeHandler stripeHandler) : IOrderHandler
 {
     public async Task<Response<Order?>> CancelAsync(CancelOrderRequest request)
     {
         var order = await context.Orders
             .Include(x => x.Product)
             .Include(x => x.Voucher)
-            .FirstOrDefaultAsync(o => o.Id == request.Id &&
-                                                                  o.UserId == request.UserId);
+            .FirstOrDefaultAsync(o => o.Number == request.OrderNumber && 
+                                      o.UserId == request.UserId);
 
         if (order is null)
             return new Response<Order?>(null, 404, "Pedido não encontrado");
@@ -144,7 +145,7 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
             order = await context.Orders
                 .Include(x => x.Product)
                 .Include(x => x.Voucher)
-                .FirstOrDefaultAsync(o => o.Id == request.Id && o.UserId == request.UserId);
+                .FirstOrDefaultAsync(o => o.Number == request.OrderNumber && o.UserId == request.UserId);
 
             if (order is null)
                 return new Response<Order?>(null, 404, "Pedido não encontrado");
@@ -167,9 +168,32 @@ public class OrderHandler(AppDbContext context) : IOrderHandler
                     return new Response<Order?>(null, 400, "Não foi possível realizar o pagamento deste pedido");
             }
 
+            string externalReference;
+            try
+            {
+                var getStripeTransactionsRequest = new GetTransactionsByOrderNumberRequest(request.OrderNumber);
+                var response = await stripeHandler.GetTransactionsByOrderNumberAsync(getStripeTransactionsRequest);
+
+                if (!response.IsSuccess)
+                    return new Response<Order?>(null, 500, "Não foi possível obter as transações no stripe");
+
+                if (response.Data!.Any(transaction => transaction.Refund))
+                    return new Response<Order?>(null, 400, "Esse pedido foi estornado");
+                
+                if (!response.Data!.Any(transaction => transaction.Paid))
+                    return new Response<Order?>(null, 400, "Não foram encontrados pagamentos para esse pedido");
+
+                externalReference = response.Data![0].Id;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return new Response<Order?>(null, 500, "Falha ao buscar pagamentos do pedido");
+            }
+            
             order.Status = EOrderStatus.Paid;
             order.UpdatedAt = DateTime.Now;
-            order.ExternalReference = request.ExternalReference;
+            order.ExternalReference = externalReference;
 
             context.Update(order);
             await context.SaveChangesAsync();

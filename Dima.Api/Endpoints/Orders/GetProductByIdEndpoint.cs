@@ -16,12 +16,7 @@ public class GetProductByIdEndpoint : IEndpoint
 
     private static async Task<IResult> HandleAsync(long id, ClaimsPrincipal user, IProductHandler handler)
     {
-
-        var request = new GetProductByIdRequest
-        {
-            Id = id,
-        };
-
+        var request = new GetProductByIdRequest(id);
         var response = await handler.GetByIdAsync(request);
 
         return response.IsSuccess

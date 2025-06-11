@@ -3,6 +3,7 @@ using Dima.Api.Endpoints.Categories;
 using Dima.Api.Endpoints.Identity;
 using Dima.Api.Endpoints.Orders;
 using Dima.Api.Endpoints.Reports;
+using Dima.Api.Endpoints.Stripe;
 using Dima.Api.Endpoints.Transactions;
 using Dima.Api.Models.Identity;
 using Dima.Core.Requests.Categories;
@@ -73,6 +74,12 @@ public static class Endpoint
             .WithTags("Vouchers")
             .RequireAuthorization()
             .MapEndpoint<GetVoucherByNumberEndpoint>();
+
+        endpoints.MapGroup("v1/payments/stripe")
+            .WithTags("Stripe")
+            .RequireAuthorization()
+            .MapEndpoint<CreateSessionEndpoint>()
+            .MapEndpoint<GetTransactionsByOrderNumberEndpoint>();
 
     }
 

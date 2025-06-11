@@ -17,10 +17,9 @@ public class GetOrderByNumberEndpoint : IEndpoint
 
     private static async Task<IResult> HandleAsync([FromRoute]string number, ClaimsPrincipal user, IOrderHandler handler)
     {
-        var request = new GetOrderByNumberRequest()
+        var request = new GetOrderByNumberRequest(number)
         {
-            UserId = user.Identity?.Name ?? string.Empty,
-            Number = number
+            UserId = user.Identity?.Name ?? string.Empty
         };
 
         var response = await handler.GetByNumberAsync(request);

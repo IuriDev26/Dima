@@ -1,5 +1,3 @@
-using System.Reflection.Metadata;
-
 namespace Dima.Api;
 
 public static class Configuration
@@ -10,4 +8,5 @@ public static class Configuration
     public static string BackEndUrl = string.Empty;
     public const int DefaultPageNumber = 1;
     public const int DefaultPageSize = 25;
+    public static string StripeApiKey = string.Empty;
 }

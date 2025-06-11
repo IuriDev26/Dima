@@ -1,6 +1,6 @@
 namespace Dima.Core.Requests.Orders;
 
-public class CancelOrderRequest : Request
+public class CancelOrderRequest(string orderNumber) : Request
 {
-    public long Id { get; set; }
+    public string OrderNumber { get; set; } = orderNumber;
 }

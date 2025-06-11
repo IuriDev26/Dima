@@ -4,6 +4,7 @@ using Dima.Api.Models.Identity;
 using Dima.Core.Handlers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 namespace Dima.Api.Common.Extensions;
 
@@ -16,6 +17,9 @@ public static class BuilderExtension
                                          ?? string.Empty;
         Configuration.FrontEndUrl = builder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
         Configuration.BackEndUrl = builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
+        Configuration.StripeApiKey = builder.Configuration.GetValue<string>("StripeApiKey") ?? string.Empty;
+
+        StripeConfiguration.ApiKey = Configuration.StripeApiKey;
     }
     public static void AddSecurity(this WebApplicationBuilder builder)
     {
@@ -49,6 +53,7 @@ public static class BuilderExtension
         builder.Services.AddTransient<IOrderHandler, OrderHandler>();
         builder.Services.AddTransient<IProductHandler, ProductHandler>();
         builder.Services.AddTransient<IVoucherHandler, VoucherHandler>();
+        builder.Services.AddTransient<IStripeHandler, StripeHandler>();
     }
 
     public static void AddCrossOrigin(this WebApplicationBuilder builder)

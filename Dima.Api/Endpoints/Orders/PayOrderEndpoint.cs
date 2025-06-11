@@ -19,7 +19,6 @@ public class PayOrderEndpoint : IEndpoint
         IOrderHandler handler)
     {
         request.UserId = user.Identity?.Name ?? string.Empty;
-        
         var response = await handler.PayAsync(request);
 
         return response.IsSuccess

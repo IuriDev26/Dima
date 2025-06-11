@@ -1,18 +1,17 @@
-using System.Text.Json.Serialization;
+
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Dima.App;
 using Dima.App.Handlers;
 using Dima.App.Security;
 using Dima.Core.Handlers;
-using Dima.Core.Models;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Http.Json;
 using MudBlazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 Configuration.BackendUrl = builder.Configuration.GetValue<string>("BackendUrl") ?? string.Empty;
+Configuration.StripePublicKey = builder.Configuration.GetValue<string>("StripePublicKey") ?? string.Empty;
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
@@ -31,6 +30,7 @@ builder.Services.AddTransient<IReportHandler, ReportHandler>();
 builder.Services.AddTransient<IProductHandler, ProductHandler>();
 builder.Services.AddTransient<IOrderHandler, OrderHandler>();
 builder.Services.AddTransient<IVoucherHandler, VoucherHandler>();
+builder.Services.AddTransient<IStripeHandler, StripeHandler>();
 builder.Services.AddHttpClient(Configuration.HttpClientName, 
     client => client.BaseAddress = new Uri(Configuration.BackendUrl))
     .AddHttpMessageHandler<CookieHandler>();

@@ -13,7 +13,7 @@ public class Order
     public Product Product { get; set; } = null!;
     public long? VoucherId { get; set; }
     public Voucher? Voucher { get; set; }
-    public decimal Total => Product.Amount - Voucher?.Amount ?? 0;
+    public decimal Total => Product.Amount - (Voucher?.Amount ?? 0);
     public EPaymentGateway PaymentGateway { get; set; } = EPaymentGateway.Stripe;
     public string? ExternalReference { get; set; }
     public EOrderStatus Status { get; set; } = EOrderStatus.Opened;

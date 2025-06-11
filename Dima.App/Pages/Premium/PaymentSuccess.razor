@@ -1,0 +1,20 @@
+@page "/premium/payment-success"
+@using Size = System.Drawing.Size
+
+<div class="d-flex justify-center align-center" style="height: 93vh">
+    <MudCard Style="width: 30vw; height: 40vh" >
+        <MudCardHeader Class="d-flex justify-center">
+            <MudIcon Class="mt-4" Style="width: 64px; height: 64px"  Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Primary"/>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudText Typo="Typo.h4" Align="Align.Center" >Pagamento Realizado com sucesso</MudText>
+            <MudText Class="mt-8"  Align="Align.Center" Typo="Typo.body1">Você já pode desfrutar dos benefícios de ser Premium</MudText>
+        </MudCardContent>
+        <MudCardActions Class="d-flex justify-center pb-6">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/"
+                       StartIcon="@Icons.Material.Filled.KeyboardArrowLeft"
+                       >Ir para o DashBoard</MudButton>
+        </MudCardActions>
+    </MudCard> 
+</div>
+

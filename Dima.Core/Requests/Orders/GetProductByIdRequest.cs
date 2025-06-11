@@ -1,6 +1,6 @@
 namespace Dima.Core.Requests.Orders;
 
-public class GetProductByIdRequest : Request
+public class GetProductByIdRequest(long id) : Request
 {
-    public long Id { get; set; }
+    public long Id { get; init; } = id;
 }

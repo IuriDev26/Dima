@@ -1,6 +1,6 @@
 namespace Dima.Core.Requests.Orders;
 
-public class GetOrderByNumberRequest : Request
+public class GetOrderByNumberRequest(string number) : Request
 {
-    public string Number { get; set; } = string.Empty;
+    public string Number { get; init; } = number;
 }

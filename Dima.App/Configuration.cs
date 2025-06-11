@@ -7,6 +7,7 @@ public static class Configuration
 {
     public const string HttpClientName = "Dima";
     public static string BackendUrl = string.Empty;
+    public static string StripePublicKey = string.Empty;
     public static int DefaultPageNumber = 1;
     public static int DefaultPageSize = 25;
     
