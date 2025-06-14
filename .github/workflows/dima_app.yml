@@ -29,13 +29,13 @@ jobs:
         run: dotnet build Dima.App/Dima.App.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish Dima.App/Dima.App.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish Dima.App/Dima.App.csproj -c Release -o ./myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ./myapp
 
   deploy:
     runs-on: ubuntu-latest
@@ -66,5 +66,5 @@ jobs:
         with:
           app-name: 'Dima'
           slot-name: 'Production'
-          package: ${{ env.DOTNET_ROOT }}/myapp
+          package: ./myapp
           
