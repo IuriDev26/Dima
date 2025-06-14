@@ -13,6 +13,11 @@ public static class BuilderExtension
 
     public static void AddConfigurations(this WebApplicationBuilder builder)
     {
+        builder.Configuration
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddEnvironmentVariables();
+        
         Configuration.ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
                                          ?? string.Empty;
         Configuration.FrontEndUrl = builder.Configuration.GetValue<string>("FrontendUrl") ?? string.Empty;
