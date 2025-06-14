@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+        Dima.App/**
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
