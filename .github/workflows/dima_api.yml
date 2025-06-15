@@ -11,6 +11,9 @@ on:
       - Dima.Api/**
   workflow_dispatch:
 
+env:
+  ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_SQL_SERVER_CONNECTION_STRING }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,8 +31,23 @@ jobs:
       - name: Install EF Tools
         run: dotnet tool install --global dotnet-ef
 
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Get IP
+        id: ip
+        uses: haythem/public-ip@v1.3 
+
+      - name: Add Firewall Rule For IP
+        run: az sql server firewall-rule create --resource-group "Dima" --server "dima-iuri" --name "ghactions" --start-ip-address ${{ steps.ip.outputs.ipv4 }}  --end-ip-address ${{ steps.ip.outputs.ipv4 }}
+      
       - name: Update database
         run: dotnet ef database update --project Dima.Api/Dima.Api.csproj
+
+      - name: Delete Firewall Rule
+        run: az sql server firewall-rule delete --resource-group "Dima" --server "dima-iuri" --name "ghactions"
 
       - name: Build with dotnet
         run: dotnet build Dima.Api/Dima.Api.csproj --configuration Release
