@@ -10,6 +10,7 @@ public static class AppExtension
 
     public static void UseSecurity(this WebApplication app)
     {
+        app.UseCors(Configuration.CorsPolicyName);
         app.UseAuthentication();
         app.UseAuthorization();
 
