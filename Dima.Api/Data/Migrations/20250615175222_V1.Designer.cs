@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dima.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250514014738_v2")]
-    partial class v2
+    [Migration("20250615175222_V1")]
+    partial class V1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -50,6 +50,148 @@ namespace Dima.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", (string)null);
+                });
+
+            modelBuilder.Entity("Dima.Core.Models.Order", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("DATETIME2");
+
+                    b.Property<string>("ExternalReference")
+                        .HasMaxLength(200)
+                        .HasColumnType("NVARCHAR");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("CHAR");
+
+                    b.Property<int>("PaymentGateway")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("DATETIME2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("NVARCHAR");
+
+                    b.Property<long?>("VoucherId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("VoucherId");
+
+                    b.ToTable("Order", (string)null);
+                });
+
+            modelBuilder.Entity("Dima.Core.Models.Product", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("MONEY");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("NVARCHAR");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("BIT");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR(60)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Product", (string)null);
+                });
+
+            modelBuilder.Entity("Dima.Core.Models.Reports.ExpensesByCategory", b =>
+                {
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Expenses")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("VIEW_EXPENSES_BY_CATEGORY", (string)null);
+                });
+
+            modelBuilder.Entity("Dima.Core.Models.Reports.IncomesAndExpenses", b =>
+                {
+                    b.Property<decimal>("Expenses")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Incomes")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("VIEW_INCOMES_AND_EXPENSES", (string)null);
+                });
+
+            modelBuilder.Entity("Dima.Core.Models.Reports.IncomesByCategory", b =>
+                {
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Incomes")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("VIEW_INCOMES_BY_CATEGORY", (string)null);
                 });
 
             modelBuilder.Entity("Dima.Core.Models.Transaction", b =>
@@ -90,6 +232,46 @@ namespace Dima.Api.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Transactions", (string)null);
+                });
+
+            modelBuilder.Entity("Dima.Core.Models.Voucher", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("MONEY");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("DATETIME2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("BIT");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("DATETIME2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("VARCHAR");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Voucher", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<long>", b =>
@@ -308,6 +490,23 @@ namespace Dima.Api.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser<long>");
 
                     b.HasDiscriminator().HasValue("User");
+                });
+
+            modelBuilder.Entity("Dima.Core.Models.Order", b =>
+                {
+                    b.HasOne("Dima.Core.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dima.Core.Models.Voucher", "Voucher")
+                        .WithMany()
+                        .HasForeignKey("VoucherId");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Voucher");
                 });
 
             modelBuilder.Entity("Dima.Core.Models.Transaction", b =>

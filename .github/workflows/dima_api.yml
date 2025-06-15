@@ -24,6 +24,12 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0'
+      
+      - name: Install EF Tools
+        run: dotnet tool install --global dotnet-ef
+
+      - name: Update database
+        run: dotnet ef database update --project Dima.Api/Dima.Api.csproj
 
       - name: Build with dotnet
         run: dotnet build Dima.Api/Dima.Api.csproj --configuration Release
