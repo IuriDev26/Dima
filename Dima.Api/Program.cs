@@ -15,7 +15,6 @@ builder.AddCrossOrigin();
 var app = builder.Build();
 app.AddSwagger();
 app.MapEndpoints();
-app.UseCors(Configuration.CorsPolicyName);
 app.UseSecurity();
 app.Run();
 

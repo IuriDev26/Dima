@@ -13,6 +13,5 @@ public static class AppExtension
         app.UseCors(Configuration.CorsPolicyName);
         app.UseAuthentication();
         app.UseAuthorization();
-
     }
 }
